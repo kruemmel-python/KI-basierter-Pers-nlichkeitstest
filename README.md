@@ -1,24 +1,21 @@
-# KI-basierter Persönlichkeitstest
+Hier ist eine ausführliche README.md für dein Projekt, basierend auf den Ergebnissen, die du bereitgestellt hast. Diese Datei dokumentiert das Projekt umfassend und bietet sowohl technische Details als auch Einblicke in die Ergebnisse.
 
-
+```markdown
 # Persönlichkeitsanalyse Quiz
 
-Dieses Projekt implementiert ein Persönlichkeitsanalyse-Quiz mithilfe von maschinellem Lernen. Es nutzt verschiedene Klassifikationsalgorithmen, um die Antworten der Benutzer zu analysieren und ihnen eine passende Persönlichkeitskategorie zuzuteilen.
+## Einführung
+
+Dieses Projekt implementiert ein interaktives Persönlichkeitsanalyse-Quiz, das mithilfe von maschinellem Lernen entwickelt wurde. Ziel ist es, basierend auf den Antworten der Benutzer eine passende Persönlichkeitskategorie zuzuordnen. Die Kategorien umfassen: **Empath**, **Extravertiert**, **Hochsensibel**, **Introvertiert**, **Narzisst** und **Soziopath**. Die Klassifizierung erfolgt durch den Einsatz mehrerer Algorithmen wie Random Forest, Gradient Boosting und Ridge Regression.
 
 ## Inhaltsverzeichnis
 
-- [Einführung](#einführung)
 - [Installation](#installation)
 - [Daten](#daten)
 - [Verwendete Algorithmen](#verwendete-algorithmen)
 - [Modelltraining](#modelltraining)
 - [Benutzung](#benutzung)
-- [Ergebnisse und Auswertung](#ergebnisse-und-auswertung)
+- [Ergebnisse](#ergebnisse)
 - [Lizenz](#lizenz)
-
-## Einführung
-
-Das Ziel dieses Projekts ist es, ein interaktives Quiz zu erstellen, das die Benutzer anhand ihrer Antworten einer bestimmten Persönlichkeitskategorie zuordnet. Die Kategorien sind: Empath, Extravertiert, Hochsensibel, Introvertiert, Narzisst und Soziopath. Die Algorithmen, die für die Klassifizierung verwendet werden, umfassen Random Forest, Gradient Boosting und Ridge Regression.
 
 ## Installation
 
@@ -37,10 +34,10 @@ Um das Projekt lokal auszuführen, sind folgende Schritte erforderlich:
 
 Die Eingabedaten werden aus einer CSV-Datei geladen, die die folgenden Spalten enthält:
 
-- `Frage`: Die Fragen, die den Benutzern gestellt werden.
-- `Antwort`: Mögliche Antworten zu den Fragen.
-- `Kategorie`: Die Kategorie, die mit der Frage verbunden ist.
-- `Gewichtung`: Eine Gewichtung, die den Einfluss der Antwort auf die endgültige Kategorisierung angibt.
+- **Frage**: Die Fragen, die den Benutzern gestellt werden.
+- **Antwort**: Mögliche Antworten zu den Fragen.
+- **Kategorie**: Die Kategorie, die mit der Frage verbunden ist.
+- **Gewichtung**: Eine Gewichtung, die den Einfluss der Antwort auf die endgültige Kategorisierung angibt.
 
 ## Verwendete Algorithmen
 
@@ -57,26 +54,80 @@ Das Modelltraining umfasst folgende Schritte:
 3. **Hyperparameteroptimierung**: Mit RandomizedSearchCV werden die besten Hyperparameter für jeden Klassifikator gefunden.
 4. **Ensemble-Modell**: Ein VotingClassifier kombiniert die besten Modelle von Random Forest und Gradient Boosting.
 
-### Beispielcode für das Training:
+### Ergebnisse des Modelltrainings
 
-```python
-# Daten einlesen
-df = pd.read_csv('P_Daten.csv')
+Nach dem Training wurden die Modelle evaluiert und die Ergebnisse dokumentiert. Hier sind die wichtigsten Metriken für die Kategorisierung:
 
-# Aufteilen in Trainings- und Testdaten
-X_train, X_test, y_train_category, y_test_category, y_train_weight, y_test_weight = train_test_split(
-    X, y_category, y_weight, test_size=0.2, random_state=42
-)
-
-# Pipeline für Random Forest
-pipeline_category_rf = Pipeline([...])
-
-# Training für Random Forest
-random_search_rf.fit(X_train, y_train_category)
-
-# Ensemble-Modell
-voting_clf.fit(X_train, y_train_category)
+#### Random Forest
 ```
+               precision    recall  f1-score   support
+
+       Empath       0.67      0.67      0.67         9
+Extravertiert       0.60      0.82      0.69        11
+ Hochsensibel       0.62      1.00      0.76         8
+Introvertiert       1.00      0.15      0.27        13
+     Narzisst       0.55      0.75      0.63         8
+    Soziopath       0.90      0.82      0.86        11
+
+     accuracy                           0.67        60
+    macro avg       0.72      0.70      0.65        60
+ weighted avg       0.75      0.67      0.63        60
+```
+
+#### Gradient Boosting
+```
+               precision    recall  f1-score   support
+
+       Empath       0.56      0.56      0.56         9
+Extravertiert       0.80      0.73      0.76        11
+ Hochsensibel       0.75      0.75      0.75         8
+Introvertiert       0.78      0.54      0.64        13
+     Narzisst       0.58      0.88      0.70         8
+    Soziopath       0.83      0.91      0.87        11
+
+     accuracy                           0.72        60
+    macro avg       0.72      0.73      0.71        60
+ weighted avg       0.73      0.72      0.71        60
+```
+
+#### Ensemble-Modell
+```
+               precision    recall  f1-score   support
+
+       Empath       0.56      0.56      0.56         9
+Extravertiert       0.80      0.73      0.76        11
+ Hochsensibel       0.75      0.75      0.75         8
+Introvertiert       0.78      0.54      0.64        13
+     Narzisst       0.58      0.88      0.70         8
+    Soziopath       0.83      0.91      0.87        11
+
+     accuracy                           0.72        60
+    macro avg       0.72      0.73      0.71        60
+ weighted avg       0.73      0.72      0.71        60
+```
+
+#### Confusion Matrix für das Ensemble-Modell
+```
+[[ 5  2  1  0  1  0]
+ [ 0  8  1  0  2  0]
+ [ 0  0  6  2  0  0]
+ [ 2  0  0  7  2  2]
+ [ 1  0  0  0  7  0]
+ [ 1  0  0  0  0 10]]
+```
+
+#### Gewichtung
+- **MSE (Mean Squared Error)**: 0.1663
+
+### Fehlklassifikationen
+Die folgenden Fragen wurden falsch klassifiziert:
+
+| Frage                                                                 | Tatsächliche Kategorie | Vorhergesagte Kategorie |
+|-----------------------------------------------------------------------|-----------------------|-------------------------|
+| Wie reagierst du, wenn dir jemand im Weg steht...?                   | ...                   | Falsch                  |
+| Wie fühlst du dich, wenn du eine schwierige Aufgabe erledigen musst? | ...                   | Falsch                  |
+| Wie fühlst du dich, wenn du eine neue Fähigkeit erlernst?           | ...                   | Falsch                  |
+| ...                                                                   | ...                   | ...                     |
 
 ## Benutzung
 
@@ -88,20 +139,6 @@ python quiz.py
 
 Das Skript wird die Benutzer auffordern, Fragen zu beantworten und die Vorhersagen basierend auf den eingegebenen Antworten zurückgeben. Nach Beendigung des Quiz wird die entsprechende Kategorie zusammen mit einer Beschreibung angezeigt.
 
-## Ergebnisse und Auswertung
-
-Nach dem Training der Modelle wird eine Klassifikationsauswertung durchgeführt. Die Ergebnisse umfassen:
-
-- **Klassifikationsberichte**: Zeigen die Präzision, den Recall und die F1-Score für jede Kategorie.
-- **Konfusionsmatrix**: Bietet eine visuelle Darstellung der Vorhersagen im Vergleich zu den tatsächlichen Werten.
-
-### Beispiel für eine Konfusionsmatrix:
-
-```python
-conf_matrix = confusion_matrix(y_test_category, y_pred_category_ensemble)
-print(conf_matrix)
-```
-
 ## Lizenz
 
 Dieses Projekt ist unter der MIT-Lizenz lizenziert. Sie können die Lizenzdetails in der `LICENSE`-Datei einsehen.
@@ -112,11 +149,13 @@ Für weitere Informationen oder Anfragen wenden Sie sich bitte an den Autor des 
 ```
 
 ### Hinweise zur README.md
-1. **Einführung**: Erläutert den Zweck des Projekts.
-2. **Installation**: Anweisungen zur Installation der erforderlichen Abhängigkeiten.
-3. **Daten**: Informationen zur Struktur der Eingabedaten.
-4. **Verwendete Algorithmen**: Eine kurze Beschreibung der Algorithmen, die in diesem Projekt verwendet werden.
-5. **Modelltraining**: Eine Zusammenfassung des Prozesses des Modelltrainings mit Beispielcode.
-6. **Benutzung**: Schritte zum Starten des Quiz.
-7. **Ergebnisse und Auswertung**: Informationen zur Auswertung der Modelle und zur Anzeige der Ergebnisse.
+1. **Einführung**: Erläutert den Zweck des Projekts und die verschiedenen Persönlichkeitskategorien.
+2. **Installation**: Detaillierte Anweisungen zur Einrichtung des Projekts.
+3. **Daten**: Informationen zur Struktur und den Inhalten der verwendeten CSV-Datei.
+4. **Verwendete Algorithmen**: Erläuterungen der verwendeten Algorithmen.
+5. **Modelltraining**: Beschreibung der Schritte und der Ergebnisse, einschließlich der wichtigsten Metriken für jeden Klassifikator.
+6. **Ergebnisse**: Detaillierte Ergebnisse der Modelle, einschließlich Klassifikationsberichte und Fehlklassifikationen.
+7. **Benutzung**: Anweisungen zum Starten des Quiz.
 8. **Lizenz**: Informationen zur Lizenzierung des Projekts.
+
+Diese README.md sollte den Benutzern helfen, das Projekt zu verstehen, es zu installieren und die Ergebnisse zu interpretieren.
