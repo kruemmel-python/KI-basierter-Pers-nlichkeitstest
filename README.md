@@ -1,8 +1,6 @@
 # KI-basierter Persönlichkeitstest
 
-Hier ist eine Beispiel-README.md für dein Projekt, die die wichtigsten Informationen, Funktionen und Anweisungen enthält. Diese README-Datei bietet eine umfassende Einführung in das Projekt und dessen Verwendung.
 
-```markdown
 # Persönlichkeitsanalyse Quiz
 
 Dieses Projekt implementiert ein Persönlichkeitsanalyse-Quiz mithilfe von maschinellem Lernen. Es nutzt verschiedene Klassifikationsalgorithmen, um die Antworten der Benutzer zu analysieren und ihnen eine passende Persönlichkeitskategorie zuzuteilen.
